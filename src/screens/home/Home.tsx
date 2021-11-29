@@ -1,83 +1,41 @@
+import { Popover } from "@headlessui/react";
 import React from "react";
-import { DefaultHeader } from "../../components";
-import { useTable } from "react-table";
+import { DefaultDisclosure, DefaultHeader } from "../../components";
 import { getSesions } from "../../endpoints/sesions/sesionsEndpoint";
 
 function Home() {
-  const data = React.useMemo(() => getSesions(), []);
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name"
-      },
-      {
-        Header: "Title",
-        accessor: "title"
-      },
-      {
-        Header: "Status",
-        accessor: "status"
-      },
-      {
-        Header: "Role",
-        accessor: "role"
-      }
-    ],
-    []
-  );
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({ columns, data });
+  const sesions = getSesions();
 
   return (
     <>
       <DefaultHeader />
-      <div className="flex justify-center">
-      <div className="mt-2 flex flex-col">
-        <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th 
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap" >{cell.render("Cell")}</td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="">
+        <div className="flex centre">
+          <h1 className="text-4xl p-2">Facultad de Informática</h1>
         </div>
+        <div className="flex centre">
+          <h1 className="text-2xl p-2">Consejo Directivo</h1>
+        </div>
+        <Popover className="relative">
+          <Popover.Button>Filtros</Popover.Button>
+
+          <Popover.Panel className="absolute z-10">
+            <div className="grid grid-cols-2">
+              <a href="/analytics">Analytics</a>
+              <a href="/engagement">Engagement</a>
+              <a href="/security">Security</a>
+              <a href="/integrations">Integrations</a>
+            </div>
+
+            <img src="/solutions.jpg" alt="" />
+          </Popover.Panel>
+        </Popover>
+
+        <div className="px-4 pt-4">
+          <div className="w-5/6 p-2 mx-auto bg-white rounded-2xl">
+            <DefaultDisclosure sesions={sesions} />
           </div>
         </div>
-      </div>
       </div>
     </>
   );
