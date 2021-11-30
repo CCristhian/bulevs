@@ -8,9 +8,22 @@ import NavbarCollapse from "@material-tailwind/react/NavbarCollapse";
 import Nav from "@material-tailwind/react/Nav";
 import NavLink from "@material-tailwind/react/NavLink";
 import Icon from "@material-tailwind/react/Icon";
+import { useGoogleLogin } from 'react-google-login'
+
+const responseGoogle = (response) => {
+  console.log(response);
+}
 
 function DefaultHeader() {
   const [openMenu, setOpenMenu] = useState(false);
+
+  const { signIn } = useGoogleLogin({
+    onSuccess: responseGoogle,
+    onFailure: responseGoogle,
+    clientId:'496009783075-l1h0dpio5jhp4the9kujqg7jgumgsqhc.apps.googleusercontent.com',
+    isSignedIn: true,
+    accessType: 'offline'
+  });
 
   return (
     <div className="p-1">
@@ -27,11 +40,11 @@ function DefaultHeader() {
 
           <NavbarCollapse open={openMenu}>
             <Nav>
-              <NavLink href="/singin" ripple="light">
+            <NavLink href="/" onClick={ signIn} ripple="light">
                 <Icon name="account_circle" size="xl" />
                 Ingresá
               </NavLink>
-              <NavLink href="/" ripple="light">
+             <NavLink href="/" ripple="light">
                 <Icon name="home" size="xl" />
                 Home
               </NavLink>

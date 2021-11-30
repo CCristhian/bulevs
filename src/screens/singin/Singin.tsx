@@ -7,6 +7,12 @@ import InputIcon from "@material-tailwind/react/InputIcon";
 import Button from "@material-tailwind/react/Button";
 import H5 from "@material-tailwind/react/Heading5";
 import { DefaultHeader } from "../../components";
+import ReactDOM from 'react-dom';
+import GoogleLogin from 'react-google-login';
+
+const responseGoogle = (response) => {
+  console.log(response);
+}
 
 function Singin() {
   return (
@@ -46,7 +52,23 @@ function Singin() {
         </Card>
       </div>
 
-
+      <GoogleLogin
+    clientId="496009783075-l1h0dpio5jhp4the9kujqg7jgumgsqhc.apps.googleusercontent.com"
+    render={renderProps => (
+      <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
+    )}
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+  />,
+      <GoogleLogin
+    clientId="496009783075-l1h0dpio5jhp4the9kujqg7jgumgsqhc.apps.googleusercontent.com"
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+  />
 
     </>
   );
